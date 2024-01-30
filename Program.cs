@@ -5,7 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
+        //Welcome the user to the game
         Console.WriteLine("Welcome to Tic-Tac-Toe!");
+        //Create a game board array to store the players’ choices
         char[] board = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
         char currentPlayer = 'X';
         Supporting game = new Supporting();
@@ -13,10 +15,13 @@ class Program
         while (true)
         {
             Console.Clear();
-            game.PrintBoard(board);
+            game.DrawBoard(board);
+
+            //Ask each player in turn for their choice and update the game board array
             Console.Write($"Player {currentPlayer}, enter your move (1-9): ");
             int move = int.Parse(Console.ReadLine());
 
+            //invalid moves
             if (move < 1 || move > 9 || board[move - 1] == 'X' || board[move - 1] == 'O')
             {
                 Console.WriteLine("Invalid move. Try again.");
@@ -24,11 +29,13 @@ class Program
             }
 
             board[move - 1] = currentPlayer;
+            //Check for a winner by calling the method in the supporting class, and notify the players
 
-            if (game.CheckForWin(board, currentPlayer))
+            if (game.CheckForWinner(board, currentPlayer))
             {
                 Console.Clear();
-                game.PrintBoard(board);
+                game.DrawBoard(board);
+                //when a win has occurred and which player won the game 
                 Console.WriteLine($"Player {currentPlayer} wins!");
                 break;
             }
@@ -36,7 +43,8 @@ class Program
             if (Array.IndexOf(board, ' ') == -1)
             {
                 Console.Clear();
-                game.PrintBoard(board);
+                //Print the board by calling the method in the supporting class
+                game.DrawBoard(board);
                 Console.WriteLine("It's a draw!");
                 break;
             }
